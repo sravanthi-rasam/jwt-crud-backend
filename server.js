@@ -1,16 +1,21 @@
 const express = require("express");
+const path = require("path");          // 🔥 ADD THIS
 const authRoutes = require("./routes/authRoutes");
 const crudRoutes = require("./routes/crudRoutes");
 
 const app = express();
 
-// ✅ Correct JSON middleware
+// JSON middleware
 app.use(express.json());
 
+// 🔥 SERVE FRONTEND FILES
+app.use(express.static(path.join(__dirname, "frontend")));
+
+// APIs
 app.use("/api/auth", authRoutes);
 app.use("/api/data", crudRoutes);
 
-// Home route
+// Optional home route
 app.get("/", (req, res) => {
   res.json({
     message: "Backend is running",
