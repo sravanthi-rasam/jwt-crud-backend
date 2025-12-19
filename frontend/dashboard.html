@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<h2>Dashboard</h2>
-<button onclick="logout()">Logout</button>
+  <div class="container">
+    <h2>Dashboard</h2>
 
-<hr>
+    <button class="logout" onclick="logout()">Logout</button>
 
-<h3>Add Item</h3>
-<input type="text" id="name" placeholder="Name" />
-<input type="number" id="price" placeholder="Price" />
-<button onclick="addItem()">Add</button>
+    <hr>
 
-<hr>
+    <h3>Add Item</h3>
+    <input id="item" type="text" placeholder="Enter item" />
+    <button onclick="addData()">Add</button>
 
-<h3>Items</h3>
-<ul id="dataList"></ul>
+    <hr>
 
-<script src="script.js"></script>
-<script src="dashboard.js"></script>
+    <h3>Items</h3>
+    <ul id="list"></ul>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>

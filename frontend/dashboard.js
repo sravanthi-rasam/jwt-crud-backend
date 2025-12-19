@@ -5,55 +5,56 @@ if (!token) {
 }
 
 // READ
-function fetchData() {
+function loadData() {
   fetch("http://localhost:3000/api/data", {
     headers: {
-      "Authorization": "Bearer " + token
+      Authorization: "Bearer " + token
     }
   })
     .then(res => res.json())
     .then(data => {
-      const list = document.getElementById("dataList");
+      const list = document.getElementById("list");
       list.innerHTML = "";
 
-      data.forEach(item => {
-        list.innerHTML += `
-          <li>
-            ${item.name} - ₹${item.price}
-            <button onclick="deleteItem('${item._id}')">Delete</button>
-          </li>
+      data.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span>${item.item}</span>
+          <button onclick="deleteData(${index})">Delete</button>
         `;
+        list.appendChild(li);
       });
     });
 }
 
 // CREATE
-function addItem() {
-  const name = document.getElementById("name").value;
-  const price = document.getElementById("price").value;
+function addData() {
+  const item = document.getElementById("item").value;
+  if (!item) return alert("Enter item");
 
   fetch("http://localhost:3000/api/data", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + token
+      Authorization: "Bearer " + token
     },
-    body: JSON.stringify({ name, price })
+    body: JSON.stringify({ item })
   }).then(() => {
-    fetchData();
+    document.getElementById("item").value = "";
+    loadData();
   });
 }
 
 // DELETE
-function deleteItem(id) {
+function deleteData(id) {
+  if (!confirm("Are you sure?")) return;
+
   fetch(`http://localhost:3000/api/data/${id}`, {
     method: "DELETE",
     headers: {
-      "Authorization": "Bearer " + token
+      Authorization: "Bearer " + token
     }
-  }).then(() => {
-    fetchData();
-  });
+  }).then(() => loadData());
 }
 
-fetchData();
+loadData();
